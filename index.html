@@ -490,7 +490,8 @@ function play(text, kind, btn){
   document.querySelectorAll("section.ch").forEach(el=>io.observe(el));
   new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) now.textContent=""; }); },{rootMargin:"-40% 0px -55% 0px"}).observe(document.getElementById("intro"));
 })();
-const norm = s => s.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z' ]/g," ").replace(/\s+/g," ").trim();
+/* 採点：大文字小文字・カンマやピリオドなどの記号・アポストロフィ・全角/半角・余分なスペースの違いは無視する */
+const norm = s => s.normalize("NFKC").toLowerCase().replace(/[’‘ʼ`´']/g,"").replace(/[^a-z0-9]+/g," ").trim();
 
 document.addEventListener("click", ev=>{
   const b = ev.target.closest("button"); if(!b) return;
