@@ -14,7 +14,7 @@
 :root{
   --bg:#F5F7FA; --surface:#FFFFFF; --ink:#16233A; --muted:#5B6678; --line:#DCE2EA;
   --accent:#1F5FBF; --accent-soft:#E6EEFA; --link:#0E8A7A; --drop:#A8B0BD; --change:#C2410C; --change-soft:#FDEDE3;
-  --ok:#15803D; --ng:#B91C1C;
+  --ok:#15803D; --ng:#B91C1C; --cover-bg:#123468; --cover-fg:#FFFFFF; --cover-sub:#A9C4F2; --cover-hl:#FDBA8C;
   --f-display:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
   --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
   --f-en:"Atkinson Hyperlegible","Helvetica Neue",Arial,sans-serif;
@@ -22,11 +22,11 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0F1724; --surface:#172234; --ink:#E6ECF5; --muted:#9AA6B8; --line:#2A3850;
   --accent:#7FB0FF; --accent-soft:#1D2E4A; --link:#4FD1BC; --drop:#5E6B80; --change:#FB923C; --change-soft:#3A2618;
-  --ok:#4ADE80; --ng:#F87171; color-scheme:dark}}
+  --ok:#4ADE80; --ng:#F87171; --cover-bg:#0B1A33; --cover-fg:#E6ECF5; --cover-sub:#8FAEE0; --cover-hl:#FB923C; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0F1724; --surface:#172234; --ink:#E6ECF5; --muted:#9AA6B8; --line:#2A3850;
   --accent:#7FB0FF; --accent-soft:#1D2E4A; --link:#4FD1BC; --drop:#5E6B80; --change:#FB923C; --change-soft:#3A2618;
-  --ok:#4ADE80; --ng:#F87171; color-scheme:dark}
+  --ok:#4ADE80; --ng:#F87171; --cover-bg:#0B1A33; --cover-fg:#E6ECF5; --cover-sub:#8FAEE0; --cover-hl:#FB923C; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.85;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
@@ -39,6 +39,7 @@ p{margin:0}
 header.hero{padding-block:36px 32px;display:grid;gap:20px;border-bottom:1px solid var(--line)}
 .brand{font-size:13px;letter-spacing:.12em;color:var(--muted);font-weight:700}
 .hero h1{font-size:clamp(40px,11vw,60px);font-weight:900;letter-spacing:.01em;line-height:1.2}
+.hero .intro-h{font-size:clamp(22px,6vw,28px);font-weight:900}
 .hero .badge{justify-self:start;background:var(--accent);color:var(--surface);font-weight:700;font-size:clamp(14px,3.8vw,17px);border-radius:6px;padding:6px 12px;letter-spacing:.04em}
 .hero .facts{display:flex;flex-wrap:wrap;gap:8px}
 .hero .facts span{font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px}
@@ -131,6 +132,38 @@ button.reveal{background:var(--surface)}
 .qi .res .kana{display:block;font-weight:700;color:var(--change);margin-top:2px}
 .qi .res .ans{font-family:var(--f-en);font-size:17px;font-weight:700;display:block}
 footer{padding-block:48px 0;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:48px}
+
+/* cover */
+.cover{background:var(--cover-bg);color:var(--cover-fg);min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;
+  margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));padding-block:28px 24px;position:relative;overflow:hidden}
+.cover>*{position:relative;max-width:760px;width:100%;margin-inline:auto}
+.cover .c-brand{font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--cover-sub)}
+.cover .c-main{align-self:center;display:grid;gap:22px;padding-block:32px}
+.cover .c-kicker{font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--cover-sub)}
+.cover h1{font-size:clamp(48px,14vw,92px);font-weight:900;line-height:1.12;letter-spacing:.01em}
+.cover h1 em{font-style:normal;color:var(--cover-hl)}
+.cover .c-sample{font-family:var(--f-en);font-size:clamp(17px,4.6vw,22px);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;border-top:1px solid color-mix(in srgb,var(--cover-fg) 25%,transparent);padding-top:18px}
+.cover .c-sample .arr{color:var(--cover-sub)}
+.cover .c-sample .kn{font-family:var(--f-body);font-weight:900;color:var(--cover-hl)}
+.cover .c-sample .lk{color:var(--cover-hl)}
+.cover .c-words{display:flex;flex-wrap:wrap;gap:8px}
+.cover .c-words span{font-size:14px;font-weight:700;border:1px solid color-mix(in srgb,var(--cover-fg) 40%,transparent);border-radius:999px;padding:4px 14px}
+.cover .c-scroll{justify-self:center;display:grid;justify-items:center;gap:6px;font-size:12px;letter-spacing:.2em;color:var(--cover-sub);text-decoration:none}
+.cover .c-scroll i{width:14px;height:14px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{translate:0 0}50%{translate:0 6px}}
+@media (prefers-reduced-motion:reduce){.cover .c-scroll i{animation:none}}
+.cover .c-ring{position:absolute;right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;border:40px solid color-mix(in srgb,var(--cover-fg) 6%,transparent);max-width:none;margin:0}
+/* top bar */
+.topbar{position:fixed;left:0;right:0;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);transform:translateY(-110%);transition:transform .25s ease}
+.topbar.show{transform:none}
+.topbar .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:12px;padding-block:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.topbar a{font-family:var(--f-display);font-weight:900;font-size:17px;color:var(--ink);text-decoration:none;white-space:nowrap}
+.topbar .now{margin-left:auto;font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+@media (prefers-reduced-motion:reduce){.topbar{transition:none}}
+section.ch{scroll-margin-top:64px}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 html{scroll-behavior:smooth}
 </style>
@@ -138,11 +171,21 @@ html{scroll-behavior:smooth}
 <body>
 
 
+<div class="topbar" id="topbar" aria-hidden="true"><div class="in"><a href="#top" tabindex="-1">聞こえない英語の正体</a><span class="now" id="nowch"></span></div></div>
+<section class="cover" id="top">
+  <span class="c-ring" aria-hidden="true"></span>
+  <div class="c-brand">たかしとれいちゃんの英語日和</div>
+  <div class="c-main">
+    <div class="c-kicker">音声変化 5大ルール 完全ガイド</div>
+    <h1>聞こえない<br><em>英語</em>の正体</h1>
+    <div class="c-words"><span>つながる</span><span>消える</span><span>弱くなる</span><span>混ざる</span><span>変わる</span></div>
+    <div class="c-sample"><span>Check<span class="lk">‿</span>it<span class="lk">‿</span>out</span><span class="arr">→</span><span class="kn">チェキラウ</span></div>
+  </div>
+  <a class="c-scroll" href="#intro">SCROLL<i aria-hidden="true"></i></a>
+</section>
 <div class="wrap">
-<header class="hero">
-  <div class="brand">たかしとれいちゃんの英語日和</div>
-  <h1>聞こえない<br>英語の正体</h1>
-  <div class="badge">音声変化 5大ルール 完全ガイド</div>
+<header class="hero" id="intro">
+  <h2 class="intro-h">このガイドについて</h2>
   <div class="facts"><span>ルール<b>5</b>つ</span><span>音声つき例文<b>46</b></span><span>ディクテーション<b>23</b>問</span></div>
   <p class="intro">知っている単語ばかりなのに聞き取れない。その原因の多くは、単語が文の中で<strong>「つながる・消える・弱くなる・混ざる・変わる」</strong>からです。このガイドでは、その5つの変化を一つずつ分解します。</p>
   <div class="hero-demo">
@@ -435,6 +478,16 @@ function play(text, kind, btn){
   a.play().catch(()=>{ if(cur===a) stopAll(); });
   return true;
 }
+
+/* 表紙を過ぎたらタイトルバーを表示し、今いる章名を出す */
+(function(){
+  const bar=document.getElementById("topbar"), cover=document.getElementById("top"), now=document.getElementById("nowch");
+  if(!("IntersectionObserver" in window)) return;
+  new IntersectionObserver(es=>{ es.forEach(e=>{ const show=!e.isIntersecting; bar.classList.toggle("show",show); bar.setAttribute("aria-hidden",String(!show)); }); },{threshold:0}).observe(cover);
+  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ const c=CH.find(x=>x.id===e.target.id); if(c) now.textContent=(/^\d/.test(c.no)?c.no+" ":"")+c.title; } }); },{rootMargin:"-40% 0px -55% 0px"});
+  document.querySelectorAll("section.ch").forEach(el=>io.observe(el));
+  new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) now.textContent=""; }); },{rootMargin:"-40% 0px -55% 0px"}).observe(document.getElementById("intro"));
+})();
 const norm = s => s.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z' ]/g," ").replace(/\s+/g," ").trim();
 
 document.addEventListener("click", ev=>{
