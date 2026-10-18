@@ -36,14 +36,23 @@ p{margin:0}
 .en{font-family:var(--f-en)}
 
 /* hero */
-header.hero{padding-block:48px 32px;display:grid;gap:16px;border-bottom:1px solid var(--line)}
-.brand{font-size:13px;letter-spacing:.12em;color:var(--muted);font-weight:500}
-.hero h1{font-size:clamp(34px,7vw,52px);font-weight:900;letter-spacing:.01em}
-.hero h1 .sub{display:block;font-size:.42em;font-weight:500;color:var(--muted);margin-top:8px;letter-spacing:.04em}
-.hero-demo{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:10px}
-.hero-demo .q{font-size:clamp(22px,5vw,30px);font-weight:900;color:var(--change)}
-.hero-demo .a{font-size:clamp(20px,4.5vw,26px)}
-.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+header.hero{padding-block:36px 32px;display:grid;gap:20px;border-bottom:1px solid var(--line)}
+.brand{font-size:13px;letter-spacing:.12em;color:var(--muted);font-weight:700}
+.hero h1{font-size:clamp(40px,11vw,60px);font-weight:900;letter-spacing:.01em;line-height:1.2}
+.hero .badge{justify-self:start;background:var(--accent);color:var(--surface);font-weight:700;font-size:clamp(14px,3.8vw,17px);border-radius:6px;padding:6px 12px;letter-spacing:.04em}
+.hero .facts{display:flex;flex-wrap:wrap;gap:8px}
+.hero .facts span{font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px}
+.hero .facts b{color:var(--accent);font-family:var(--f-en);font-size:15px;margin:0 2px}
+.hero .intro{font-size:clamp(15px,4vw,17px);line-height:1.9;max-width:40em}
+.hero .intro strong{background:linear-gradient(transparent 60%,var(--change-soft) 60%)}
+.hero-demo{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:20px 18px;display:grid;gap:10px}
+.hero-demo .try{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--accent)}
+.hero-demo .q{font-size:clamp(28px,8vw,36px);font-weight:900;color:var(--change);line-height:1.3}
+.hero-demo .q span{display:inline-block}
+.hero-demo .a{font-size:clamp(20px,5vw,26px)}
+.hero-demo .ctrls{grid-template-columns:1fr 1fr}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px 16px;font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.legend .lt{grid-column:1/-1;font-size:12px;font-weight:700;letter-spacing:.14em}
 .legend span b{font-family:var(--f-en);font-weight:700}
 .notice{font-size:13px;color:var(--muted);background:var(--accent-soft);border-radius:8px;padding:10px 14px}
 
@@ -75,20 +84,27 @@ table.wf td.en{font-weight:700}
 
 /* example cards */
 .ex-list{display:grid;gap:12px}
+section.ch>*,.ex-list>*,.ex>*,.quiz>*,.qi>*{min-width:0}
+@media (max-width:560px){button{padding:9px 6px;font-size:12.5px;gap:5px}}
 .ex{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
 .ex .sent{font-family:var(--f-en);font-size:clamp(19px,4vw,23px);line-height:1.6;min-width:0;overflow-wrap:anywhere}
 .ex .hear{font-size:17px;font-weight:700}
 .ex .hear .k{color:var(--change)}
 .ex .note{font-size:14px;color:var(--muted)}
 .ex .hidden-hear{color:var(--muted);font-size:14px}
-.ctrls{display:flex;flex-wrap:wrap;gap:6px}
+.ctrls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:6px}
+.ex .ctrls{grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.2fr)}
+@media (max-width:560px){.ex .ctrls{grid-template-columns:repeat(3,minmax(0,1fr))} .ex .ctrls .reveal{grid-column:1/-1}}
 button{font-family:var(--f-body);font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--bg);color:var(--ink);
-  border-radius:999px;padding:6px 14px;cursor:pointer;line-height:1.4}
+  border-radius:999px;padding:9px 10px;cursor:pointer;line-height:1.3;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px}
+button[data-say]::before{content:"";width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent;flex:none}
+button.playing::before{width:9px;height:9px;border:0;background:currentColor;border-radius:1px}
+button.playing{box-shadow:0 0 0 3px var(--accent-soft)}
 button:hover{border-color:var(--accent);color:var(--accent)}
 button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 button.play{background:var(--accent);border-color:var(--accent);color:var(--surface)}
 button.play:hover{color:var(--surface);opacity:.88}
-button.reveal{margin-left:auto}
+button.reveal{background:var(--surface)}
 .lk{color:var(--link);font-weight:700;padding:0 1px}
 .dl{color:var(--drop);text-decoration:line-through;text-decoration-thickness:1.5px}
 .cg{color:var(--change);background:var(--change-soft);border-radius:3px;padding:0 2px;font-weight:700}
@@ -106,6 +122,9 @@ button.reveal{margin-left:auto}
 .quiz .qh .score{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .qi{background:var(--surface);border-radius:10px;padding:14px;display:grid;gap:10px}
 .qi .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qi .row.btns{display:grid;grid-template-columns:1fr 1fr}
+.qi .check{flex:0 0 auto}
+@media (max-width:560px){.qi .row:not(.btns) input{flex-basis:100%}.qi .check{flex:1 1 100%}}
 .qi input{flex:1 1 220px;min-width:0;font-family:var(--f-en);font-size:17px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
 .qi .res{font-size:14px}
 .qi .res.ok b{color:var(--ok)} .qi .res.ng b{color:var(--ng)}
@@ -122,17 +141,21 @@ html{scroll-behavior:smooth}
 <div class="wrap">
 <header class="hero">
   <div class="brand">たかしとれいちゃんの英語日和</div>
-  <h1>聞こえない英語の正体<span class="sub">音声変化 5大ルール 完全ガイド</span></h1>
+  <h1>聞こえない<br>英語の正体</h1>
+  <div class="badge">音声変化 5大ルール 完全ガイド</div>
+  <div class="facts"><span>ルール<b>5</b>つ</span><span>音声つき例文<b>46</b></span><span>ディクテーション<b>23</b>問</span></div>
+  <p class="intro">知っている単語ばかりなのに聞き取れない。その原因の多くは、単語が文の中で<strong>「つながる・消える・弱くなる・混ざる・変わる」</strong>からです。このガイドでは、その5つの変化を一つずつ分解します。</p>
   <div class="hero-demo">
-    <div class="q">「ワラユー ガナ ドゥ？」</div>
+    <div class="try">まずは聞いてみてください</div>
+    <div class="q"><span>「ワラユー</span> <span>ガナ</span> <span>ドゥ？」</span></div>
     <div class="a en">What are you gonna do?</div>
     <div class="ctrls">
-      <button class="play" data-say="What are you gonna do?" data-rate="1">▶ ナチュラル</button>
+      <button class="play" data-say="What are you gonna do?" data-rate="1">ナチュラル</button>
       <button data-say="What are you gonna do?" data-rate="0.6">ゆっくり</button>
     </div>
-    <p style="font-size:14px;color:var(--muted)">知っている単語ばかりなのに聞き取れない。その原因の多くは、単語が文の中で「つながる・消える・弱くなる・混ざる・変わる」からです。このガイドでは、その5つの変化を一つずつ分解します。</p>
   </div>
   <div class="legend" aria-label="記号の見方">
+    <span class="lt">記号の見方</span>
     <span><b class="lk">‿</b> 音がつながる</span>
     <span><b class="dl">t</b> 音が消える／ほぼ聞こえない</span>
     <span><b class="cg">d y</b> 音が変わる・混ざる</span>
@@ -233,7 +256,7 @@ const CH = [
   <tr><td class="en">for</td><td>フォー</td><td>ファ</td><td class="en">for you</td></tr>
   <tr><td class="en">and</td><td>アンド</td><td>アン / ン</td><td class="en">rock and roll</td></tr>
   <tr><td class="en">of</td><td>オヴ</td><td>アヴ / ア</td><td class="en">a cup of tea</td></tr>
-  <tr><td class="en">can</td><td>キャン</td><td>クン</td><td class="en">I can do it</td></tr>
+  <tr><td class="en">can</td><td>キャン</td><td>ケン</td><td class="en">I can do it</td></tr>
   <tr><td class="en">them</td><td>ゼム</td><td>ェム</td><td class="en">tell them</td></tr>
   <tr><td class="en">you / your</td><td>ユー / ユア</td><td>ヤ / ヨ</td><td class="en">see you</td></tr>
   <tr><td class="en">have</td><td>ハヴ</td><td>アヴ / ヴ</td><td class="en">should have</td></tr>
@@ -245,9 +268,9 @@ const CH = [
     {s:"This is (for) you.", h:"ディスィズ ファユー", n:"for が「ファ」に。"}
   ],
   extra:`<h3><span class="mini">発展</span>can と can't の聞き分け</h3>
-  <p>can は弱形「クン」で短く、動詞のほうが強く読まれます。can't は弱形がなく「キャン(ト)」と強く読まれ、t は脱落しがちです。末尾の t ではなく、<b>母音の強さと長さ</b>で聞き分けるのがコツです。</p>`,
+  <p>can は弱形「ケン」で短く、動詞のほうが強く読まれます。can't は弱形がなく「キャン(ト)」と強く読まれ、t は脱落しがちです。末尾の t ではなく、<b>母音の強さと長さ</b>で聞き分けるのがコツです。</p>`,
   ex2:[
-    {s:"I (can) *do* it.", h:"アイクン ドゥーイッ", n:"can は弱く、do が強い。"},
+    {s:"I (can) *do* it.", h:"アイケン ドゥーイッ", n:"can は弱く、do が強い。"},
     {s:"I *can'[t]* do it.", h:"アイキャン ドゥーイッ", n:"can't 自体が強く長い。"}
   ],
   quiz:["I need to go.","What do you want for lunch?","Bread and butter."] },
@@ -331,7 +354,7 @@ const CH = [
   quiz:["What are you gonna do about it?","Did you get a lot of it?","I don't want to talk about it.","Tell him I said hi.","Could you put it on the table?"] }
 ];
 
-const KANA = {"Take it easy.": "テイキリーズィー", "Hold on a second.": "ホウルダナ セカン", "Can I have an orange?": "クナイ ハヴァン ノーリンジ", "I don't think so.": "アイドン スィンク ソウ", "Good job.": "グッジャブ", "Give him a call.": "ギヴィマ コーゥ", "I need to go.": "アイニーラ ゴウ", "What do you want for lunch?": "ワラヤ ワン ファ ランチ", "Bread and butter.": "ブレッドン バラー", "Did you see that?": "ディジャ スィー ザッ", "What did you say?": "ワディジャ セイ", "Can I ask you something?": "クナイ アスキュー サムスィン", "Let it go.": "レリゴウ", "I got it.": "アイガリッ", "What a beautiful day.": "ワラ ビューリフォー デイ", "I'm gonna be late.": "アイムガナ ビ レイッ", "Do you wanna come?": "ダヤ ワナ カム", "I kinda like it.": "アイ カインダ ライキッ", "What are you gonna do about it?": "ワラヤ ガナ ドゥー アバウリッ", "Did you get a lot of it?": "ディジャ ゲラ ラーラヴィッ", "I don't want to talk about it.": "アイドン ワナ トーカバウリッ", "Tell him I said hi.": "テリム アイセッ ハイ", "Could you put it on the table?": "クッジャ プリロン ザ テイボゥ"};
+const KANA = {"Take it easy.": "テイキリーズィー", "Hold on a second.": "ホウルダナ セカン", "Can I have an orange?": "ケナイ ハヴァン ノーリンジ", "I don't think so.": "アイドン スィンク ソウ", "Good job.": "グッジャブ", "Give him a call.": "ギヴィマ コーゥ", "I need to go.": "アイニーラ ゴウ", "What do you want for lunch?": "ワラヤ ワン ファ ランチ", "Bread and butter.": "ブレッドン バラー", "Did you see that?": "ディジャ スィー ザッ", "What did you say?": "ワディジャ セイ", "Can I ask you something?": "ケナイ アスキュー サムスィン", "Let it go.": "レリゴウ", "I got it.": "アイガリッ", "What a beautiful day.": "ワラ ビューリフォー デイ", "I'm gonna be late.": "アイムガナ ビ レイッ", "Do you wanna come?": "ダヤ ワナ カム", "I kinda like it.": "アイ カインダ ライキッ", "What are you gonna do about it?": "ワラヤ ガナ ドゥー アバウリッ", "Did you get a lot of it?": "ディジャ ゲラ ラーラヴィッ", "I don't want to talk about it.": "アイドン ワナ トーカバウリッ", "Tell him I said hi.": "テリム アイセッ ハイ", "Could you put it on the table?": "クッジャ プリロン ザ テイボゥ"};
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
 function mark(s){
   return esc(s)
@@ -349,7 +372,7 @@ function exCard(e){
   return `<div class="ex">
     <div class="sent">${mark(e.s)}</div>
     <div class="ctrls">
-      <button class="play" data-say="${say}" data-rate="1">▶ ナチュラル</button>
+      <button class="play" data-say="${say}" data-rate="1">ナチュラル</button>
       <button data-say="${say}" data-rate="0.6">ゆっくり</button>
       <button data-say="${say}" data-words="1">単語区切り</button>
       <button class="reveal" aria-controls="${id}" aria-expanded="false">聞こえ方を見る</button>
@@ -367,8 +390,8 @@ function quizBlock(ch){
   const items = ch.quiz.map((q,i)=>{
     const id=`q-${ch.id}-${i}`; const say=q.replace(/"/g,"&quot;");
     return `<div class="qi" data-ans="${say}">
-      <div class="row">
-        <button class="play" data-say="${say}" data-rate="1">▶ 第${i+1}問</button>
+      <div class="row btns">
+        <button class="play" data-say="${say}" data-rate="1">第${i+1}問を聞く</button>
         <button data-say="${say}" data-rate="0.6">ゆっくり</button>
       </div>
       <div class="row">
@@ -400,11 +423,16 @@ document.getElementById("chapters").innerHTML = CH.map(c=>`
 /* 音声（仮：AI音声ファイル。本番は収録音声に差し替え） */
 const AUDIO = {"What are you gonna do?": "a00", "Want some coffee?": "a01", "Would you like to have some coffee?": "a02", "Check it out.": "a03", "Pick it up.": "a04", "an apple": "a05", "Come on in.": "a06", "Not at all.": "a07", "Go on.": "a08", "I am here.": "a09", "good boy": "a10", "hot dog": "a11", "I don't know.": "a12", "next day": "a13", "last night": "a14", "Tell him.": "a15", "Ask her.": "a16", "twenty": "a17", "I want it.": "a18", "milk / feel / people": "a19", "rock and roll": "a20", "a cup of tea": "a21", "Tell them I said hi.": "a22", "This is for you.": "a23", "I can do it.": "a24", "I can't do it.": "a25", "Nice to meet you.": "a26", "Did you eat?": "a27", "Would you like some?": "a28", "Bless you.": "a29", "as you know": "a30", "Don't you think?": "a31", "ten people": "a32", "in bed": "a33", "water": "a34", "Get up.": "a35", "a lot of": "a36", "What are you doing?": "a37", "I'll call you later.": "a38", "button / mountain": "a39", "Could I?": "a40", "I'm gonna call her.": "a41", "I wanna go home.": "a42", "I gotta go.": "a43", "Lemme see.": "a44", "You should've told me.": "a45", "Take it easy.": "a46", "Hold on a second.": "a47", "Can I have an orange?": "a48", "I don't think so.": "a49", "Good job.": "a50", "Give him a call.": "a51", "I need to go.": "a52", "What do you want for lunch?": "a53", "Bread and butter.": "a54", "Did you see that?": "a55", "What did you say?": "a56", "Can I ask you something?": "a57", "Let it go.": "a58", "I got it.": "a59", "What a beautiful day.": "a60", "I'm gonna be late.": "a61", "Do you wanna come?": "a62", "I kinda like it.": "a63", "What are you gonna do about it?": "a64", "Did you get a lot of it?": "a65", "I don't want to talk about it.": "a66", "Tell him I said hi.": "a67", "Could you put it on the table?": "a68", "light / look / alive": "a69"};
 let cur=null;
-function play(text, kind){
+let curBtn=null;
+function stopAll(){ if(cur){ cur.pause(); cur=null; } if(curBtn){ curBtn.classList.remove("playing"); curBtn=null; } }
+function play(text, kind, btn){
   const id=AUDIO[text]; if(!id) return false;
-  if(cur){ cur.pause(); cur.currentTime=0; }
-  cur=new Audio("audio/"+id+kind+".mp3");
-  cur.play().catch(()=>{});
+  if(btn && btn===curBtn){ stopAll(); return true; }
+  stopAll();
+  cur=new Audio("audio/"+id+kind+".mp3"); curBtn=btn||null;
+  if(curBtn) curBtn.classList.add("playing");
+  const a=cur; a.addEventListener("ended",()=>{ if(cur===a) stopAll(); });
+  a.play().catch(()=>{ if(cur===a) stopAll(); });
   return true;
 }
 const norm = s => s.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z' ]/g," ").replace(/\s+/g," ").trim();
@@ -413,7 +441,7 @@ document.addEventListener("click", ev=>{
   const b = ev.target.closest("button"); if(!b) return;
   if(b.dataset.say){
     const kind = b.dataset.words ? "w" : (parseFloat(b.dataset.rate||"1")<1 ? "s" : "n");
-    if(!play(b.dataset.say, kind)){ b.textContent="音声準備中"; }
+    if(!play(b.dataset.say, kind, b)){ b.textContent="音声準備中"; }
     return;
   }
   if(b.classList.contains("reveal")){
