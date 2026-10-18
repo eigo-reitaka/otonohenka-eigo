@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>聞こえない英語の正体</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: 1カラムの読み物。章ごとに「解説→例文カード→聞き取りテスト」。英文は記号付きの譜面のように見せる */
+:root{
+  --bg:#F5F7FA; --surface:#FFFFFF; --ink:#16233A; --muted:#5B6678; --line:#DCE2EA;
+  --accent:#1F5FBF; --accent-soft:#E6EEFA; --link:#0E8A7A; --drop:#A8B0BD; --change:#C2410C; --change-soft:#FDEDE3;
+  --ok:#15803D; --ng:#B91C1C;
+  --f-display:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-en:"Atkinson Hyperlegible","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1724; --surface:#172234; --ink:#E6ECF5; --muted:#9AA6B8; --line:#2A3850;
+  --accent:#7FB0FF; --accent-soft:#1D2E4A; --link:#4FD1BC; --drop:#5E6B80; --change:#FB923C; --change-soft:#3A2618;
+  --ok:#4ADE80; --ng:#F87171; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1724; --surface:#172234; --ink:#E6ECF5; --muted:#9AA6B8; --line:#2A3850;
+  --accent:#7FB0FF; --accent-soft:#1D2E4A; --link:#4FD1BC; --drop:#5E6B80; --change:#FB923C; --change-soft:#3A2618;
+  --ok:#4ADE80; --ng:#F87171; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.85;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.35;margin:0}
+p{margin:0}
+.en{font-family:var(--f-en)}
+
+/* hero */
+header.hero{padding-block:48px 32px;display:grid;gap:16px;border-bottom:1px solid var(--line)}
+.brand{font-size:13px;letter-spacing:.12em;color:var(--muted);font-weight:500}
+.hero h1{font-size:clamp(34px,7vw,52px);font-weight:900;letter-spacing:.01em}
+.hero h1 .sub{display:block;font-size:.42em;font-weight:500;color:var(--muted);margin-top:8px;letter-spacing:.04em}
+.hero-demo{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:10px}
+.hero-demo .q{font-size:clamp(22px,5vw,30px);font-weight:900;color:var(--change)}
+.hero-demo .a{font-size:clamp(20px,4.5vw,26px)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.legend span b{font-family:var(--f-en);font-weight:700}
+.notice{font-size:13px;color:var(--muted);background:var(--accent-soft);border-radius:8px;padding:10px 14px}
+
+/* toc */
+nav.toc{padding-block:28px;display:grid;gap:8px;border-bottom:1px solid var(--line)}
+nav.toc .lbl{font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:700}
+nav.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+nav.toc a{color:var(--ink);text-decoration:none;display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent)}
+nav.toc .no{font-family:var(--f-en);font-weight:700;color:var(--accent);min-width:3.2em;font-size:14px}
+
+/* chapter */
+section.ch{padding-block:48px 8px;display:grid;gap:22px;scroll-margin-top:16px}
+section.ch + section.ch{margin-top:40px}
+.ch-head{display:grid;gap:8px;background:var(--accent);color:var(--surface);border-radius:14px;padding:24px 22px 22px;position:relative;overflow:hidden}
+.ch-head::after{content:attr(data-no);position:absolute;right:14px;bottom:-22px;font-family:var(--f-en);font-weight:700;font-size:110px;line-height:1;opacity:.16;pointer-events:none}
+.ch-no{font-family:var(--f-en);font-weight:700;font-size:13px;letter-spacing:.16em;background:var(--surface);color:var(--accent);border-radius:999px;padding:3px 12px;justify-self:start;position:relative}
+.ch-head h2{font-size:clamp(26px,5vw,36px);font-weight:900;position:relative}
+.ch-head .lead{font-size:15px;opacity:.92;position:relative;max-width:52ch}
+.prose{display:grid;gap:14px;max-width:65ch}
+.rule{border-left:3px solid var(--accent);padding:6px 0 6px 14px;font-weight:700}
+h3{font-size:19px;font-weight:700;margin-top:10px}
+h3 .mini{font-size:12px;font-weight:700;color:var(--change);background:var(--change-soft);border-radius:4px;padding:2px 8px;margin-right:8px;vertical-align:2px}
+table.wf{border-collapse:collapse;width:100%;font-size:15px}
+.tbl{overflow-x:auto}
+table.wf th,table.wf td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+table.wf th{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.06em}
+table.wf td.en{font-weight:700}
+
+/* example cards */
+.ex-list{display:grid;gap:12px}
+.ex{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.ex .sent{font-family:var(--f-en);font-size:clamp(19px,4vw,23px);line-height:1.6;min-width:0;overflow-wrap:anywhere}
+.ex .hear{font-size:17px;font-weight:700}
+.ex .hear .k{color:var(--change)}
+.ex .note{font-size:14px;color:var(--muted)}
+.ex .hidden-hear{color:var(--muted);font-size:14px}
+.ctrls{display:flex;flex-wrap:wrap;gap:6px}
+button{font-family:var(--f-body);font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--bg);color:var(--ink);
+  border-radius:999px;padding:6px 14px;cursor:pointer;line-height:1.4}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.play{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button.play:hover{color:var(--surface);opacity:.88}
+button.reveal{margin-left:auto}
+.lk{color:var(--link);font-weight:700;padding:0 1px}
+.dl{color:var(--drop);text-decoration:line-through;text-decoration-thickness:1.5px}
+.cg{color:var(--change);background:var(--change-soft);border-radius:3px;padding:0 2px;font-weight:700}
+.wk{color:var(--muted);font-size:.86em}
+.st{font-weight:700;border-bottom:2px solid var(--accent)}
+
+/* column */
+.column{border:1px dashed var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.column .clbl{font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:700}
+
+/* quiz */
+.quiz{background:var(--accent-soft);border-radius:12px;padding:18px;display:grid;gap:14px}
+.quiz .qh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.quiz .qh h3{margin:0;font-size:17px}
+.quiz .qh .score{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.qi{background:var(--surface);border-radius:10px;padding:14px;display:grid;gap:10px}
+.qi .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qi input{flex:1 1 220px;min-width:0;font-family:var(--f-en);font-size:17px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.qi .res{font-size:14px}
+.qi .res.ok b{color:var(--ok)} .qi .res.ng b{color:var(--ng)}
+.qi .res .kana{display:block;font-weight:700;color:var(--change);margin-top:2px}
+.qi .res .ans{font-family:var(--f-en);font-size:17px;font-weight:700;display:block}
+footer{padding-block:48px 0;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:48px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header class="hero">
+  <div class="brand">たかしとれいちゃんの英語日和</div>
+  <h1>聞こえない英語の正体<span class="sub">音声変化 5大ルール 完全ガイド</span></h1>
+  <div class="hero-demo">
+    <div class="q">「ワラユー ガナ ドゥ？」</div>
+    <div class="a en">What are you gonna do?</div>
+    <div class="ctrls">
+      <button class="play" data-say="What are you gonna do?" data-rate="1">▶ ナチュラル</button>
+      <button data-say="What are you gonna do?" data-rate="0.6">ゆっくり</button>
+    </div>
+    <p style="font-size:14px;color:var(--muted)">知っている単語ばかりなのに聞き取れない。その原因の多くは、単語が文の中で「つながる・消える・弱くなる・混ざる・変わる」からです。このガイドでは、その5つの変化を一つずつ分解します。</p>
+  </div>
+  <div class="legend" aria-label="記号の見方">
+    <span><b class="lk">‿</b> 音がつながる</span>
+    <span><b class="dl">t</b> 音が消える／ほぼ聞こえない</span>
+    <span><b class="cg">d y</b> 音が変わる・混ざる</span>
+    <span><b class="wk">to</b> 弱く短く言う</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="目次">
+  <div class="lbl">目次</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main id="chapters"></main>
+
+<footer>
+  <p>© たかしとれいちゃんの英語日和 All rights reserved.</p>
+</footer>
+</div>
+
+<script>
+/* 記法: ‿=連結 / [x]=脱落 / {x}=変化 / (x)=弱形 / *x*=強く読む */
+const CH = [
+{ id:"rhythm", no:"00", title:"なぜ音は変わるのか", tag:"土台", lead:"5つのルールは、すべて同じ理由で起きています。",
+  body:`<p>英語は「強く読む単語」を一定のリズムで打ち、その間にある「弱い単語」を詰め込んで話す言語です。日本語のように一音一音を同じ長さで読むことはしません。</p>
+  <p class="rule">強いところはハッキリ、弱いところは短く・あいまいに・つなげて。これが音声変化のすべての出発点です。</p>
+  <p>強く読まれやすいのは、意味を運ぶ単語（名詞・動詞・形容詞・副詞・否定語）。弱くなりやすいのは、文法をつなぐ単語（冠詞・前置詞・代名詞・助動詞・be動詞・接続詞）です。</p>
+  <p>下の2文を聞き比べてみてください。単語数は倍以上違いますが、強く読む単語（下線）はどちらも2つなので、言い終わるまでの時間はほとんど変わりません。</p>`,
+  ex:[
+    {s:"*Want* some *coffee*?", h:"ワンサム カフィ？", n:"強く読むのは want と coffee の2つ。"},
+    {s:"(Would you) *like* (to have) (some) *coffee*?", h:"ウッジュ ライクタ ハヴサム カフィ？", n:"増えた単語はすべて弱く速く詰め込まれ、リズムは like と coffee の2拍のまま。"}
+  ],
+  quiz:[] },
+
+{ id:"linking", no:"01", title:"リンキング（連結）", tag:"つながる", lead:"単語の終わりと次の単語の頭が、くっついて1語のように聞こえる現象です。",
+  body:`<h3>基本形：子音で終わる単語 ＋ 母音で始まる単語</h3>
+  <p class="rule">前の単語の最後の子音が、次の単語の母音に「乗り移る」。</p>
+  <p>check it out は「チェック・イット・アウト」ではなく、check‿it‿out → 「チェキラウ」に近くなります。単語の切れ目で息を止めないのがポイントです。</p>`,
+  ex:[
+    {s:"Check‿it‿ou[t].", h:"チェキラウ", n:"k が it に、t が out に乗り移る（t はさらにフラップ化）。"},
+    {s:"Pick‿it‿up.", h:"ピキラップ", n:"pick‿it‿up が1語のように。"},
+    {s:"an‿apple", h:"アナポー", n:"n が apple の頭に移る。"},
+    {s:"Come‿on‿in.", h:"カモニン", n:"m と n が次の母音とつながる。"},
+    {s:"Not‿at‿all.", h:"ナラロー", n:"イギリス英語では「ノタトー」。t の処理はフラップの章で。"}
+  ],
+  extra:`<h3><span class="mini">発展</span>母音 ＋ 母音のときは「つなぎの音」が入る</h3>
+  <p>母音どうしがぶつかるとき、英語は間に軽い <span class="en">w</span> や <span class="en">y</span> の音を入れてなめらかにつなぎます（音の挿入）。</p>
+  <div class="tbl"><table class="wf"><tr><th>前の母音</th><th>入る音</th><th>例</th><th>聞こえ方</th></tr>
+  <tr><td>ウ・オウ系（go, do, you）</td><td class="en">w</td><td class="en">go‿on / do‿it</td><td>ゴウォン / ドゥウィッ</td></tr>
+  <tr><td>イ・エイ・アイ系（I, see, say）</td><td class="en">y</td><td class="en">I‿am / see‿it</td><td>アイヤム / スィーイッ</td></tr>
+  <tr><td>r で終わる語（主に米以外）</td><td class="en">r</td><td class="en">far‿away</td><td>ファーラウェイ</td></tr></table></div>`,
+  ex2:[
+    {s:"Go‿on.", h:"ゴウォン", n:"w の音が入る。"},
+    {s:"I‿am here.", h:"アイヤム ヒア", n:"y の音が入る。"}
+  ],
+  quiz:["Take it easy.","Hold on a second.","Can I have an orange?"] },
+
+{ id:"elision", no:"02", title:"脱落", tag:"消える", lead:"発音されるはずの音が、ほとんど聞こえなくなる現象です。",
+  body:`<h3>基本形1：破裂音 ＋ 子音</h3>
+  <p class="rule">p / b / t / d / k / g が子音の前に来ると、口の形だけ作って音は出さない。</p>
+  <p>good boy の d は「舌を上につける準備」だけして、破裂させずに b に進みます。結果「グッボーイ」。「消える」といっても完全に無いのではなく、一瞬の「間」として残っているのが特徴です。</p>
+  <h3>基本形2：文末・語末の破裂音</h3>
+  <p>文の最後の t や d も、はっきり破裂させないことがよくあります。I don't know. の t はほぼ聞こえません。</p>
+  <h3>基本形3：子音が3つ以上続くとき</h3>
+  <p>next day のように子音が渋滞すると、真ん中の t が落ちて「ネクスデイ」になります。</p>`,
+  ex:[
+    {s:"goo[d] boy", h:"グッボーイ", n:"d を破裂させない。"},
+    {s:"ho[t] dog", h:"ハッドッグ", n:"t は口の準備だけ。"},
+    {s:"I don'[t] know.", h:"アイドンノウ", n:"t がほぼ消え、さらに don't 自体も弱まる。"},
+    {s:"nex[t] day", h:"ネクスデイ", n:"子音の渋滞で t が落ちる。"},
+    {s:"las[t] night", h:"ラスナイ(ト)", n:"st + n の組み合わせで t が消える。"}
+  ],
+  extra:`<h3><span class="mini">発展</span>h の脱落</h3>
+  <p>he / him / her / his / have などの <span class="en">h</span> は、文中で弱く読まれると消えます。そのうえで前の子音とリンキングします。</p>
+  <h3><span class="mini">発展</span>n の後の t の脱落</h3>
+  <p>アメリカ英語では、n の直後の t が母音にはさまれると消えることがあります。twenty → トゥエニー、internet → イナネット。</p>
+  <p>twenty は一見「母音にはさまれていない」ように見えますが、最後の y は発音記号では <span class="en">/i/</span>（イ）という<b>母音</b>です。つまり発音上は「n ＋ t ＋ 母音」の並びになっていて、このルールが当てはまります。つづりではなく音で見るのがポイントです。</p>`,
+  ex2:[
+    {s:"Tell‿[h]im.", h:"テリム", n:"h が消えて l とつながる。"},
+    {s:"Ask‿[h]er.", h:"アスカー", n:"同じく h が消える。"},
+    {s:"twen[t]y", h:"トゥエニー", n:"n の後の t が消える。y は発音記号では /i/ という母音なので、t は「n と母音」にはさまれた位置にある。"},
+    {s:"I wan[t] it.", h:"アイワニッ", n:"want it → ワニッ。"}
+  ],
+  column:`<div class="clbl">コラム｜ライトLとダークL</div>
+  <p>英語の <span class="en">l</span> には、位置によって2種類の音があります。</p>
+  <p><b>ライトL（明るいL）</b>：母音の前に来る l です（light / look / alive）。舌先を上の前歯の裏の歯ぐきにしっかりつけて、舌の両脇から声を出します。日本語の「ラ行」より舌先をつける時間が長く、はっきり聞こえる音です。</p>
+  <p><b>ダークL（暗いL）</b>：語末や子音の前の <span class="en">l</span> は、舌先を上につけずに「ウ」に近い音になります（ダークL）。milk が「ミゥク」、feel が「フィーゥ」、people が「ピーポゥ」と聞こえるのはこのためです。日本人が「ル」を探して聞き取れなくなる代表例です。</p>
+  <p>同じ <span class="en">l</span> でも、little は最初がライトL、最後がダークLで「リロゥ」に近く聞こえます。</p>`,
+  ex3:[ {s:"light / look / alive", h:"ライト / ルック / アライヴ", n:"ライトL：舌先をつけてはっきり。"}, {s:"milk / feel / people", h:"ミゥク / フィーゥ / ピーポゥ", n:"ダークL：l がウに近づく。"} ],
+  quiz:["I don't think so.","Good job.","Give him a call."] },
+
+{ id:"weak", no:"03", title:"弱形", tag:"弱くなる", lead:"機能語が、教科書で習う発音とは別の「弱い発音」で読まれる現象です。",
+  body:`<p>00章で見たとおり、文法をつなぐ単語は弱く詰め込まれます。このとき母音があいまいな「ア（シュワ）」に変わったり、音そのものが削られたりします。</p>
+  <p class="rule">機能語は、教科書で習う発音（強形）より弱形で使われるほうがずっと多い。</p>
+  <p>つまり、教科書の発音だけ覚えていると、実際の会話の大半で「知らない音」を聞いていることになります。</p>
+  <div class="tbl"><table class="wf">
+  <tr><th>単語</th><th>強形（教科書）</th><th>弱形（会話）</th><th>例</th></tr>
+  <tr><td class="en">to</td><td>トゥー</td><td>タ / ツァ</td><td class="en">want to go</td></tr>
+  <tr><td class="en">for</td><td>フォー</td><td>ファ</td><td class="en">for you</td></tr>
+  <tr><td class="en">and</td><td>アンド</td><td>アン / ン</td><td class="en">rock and roll</td></tr>
+  <tr><td class="en">of</td><td>オヴ</td><td>アヴ / ア</td><td class="en">a cup of tea</td></tr>
+  <tr><td class="en">can</td><td>キャン</td><td>クン</td><td class="en">I can do it</td></tr>
+  <tr><td class="en">them</td><td>ゼム</td><td>ェム</td><td class="en">tell them</td></tr>
+  <tr><td class="en">you / your</td><td>ユー / ユア</td><td>ヤ / ヨ</td><td class="en">see you</td></tr>
+  <tr><td class="en">have</td><td>ハヴ</td><td>アヴ / ヴ</td><td class="en">should have</td></tr>
+  </table></div>`,
+  ex:[
+    {s:"rock (and) roll", h:"ロックンロー", n:"and が「ン」だけになる。"},
+    {s:"a cup (of) tea", h:"ア カッパ ティー", n:"of が「ア」まで弱まる。"},
+    {s:"Tell (them) I said hi.", h:"テレム アイセッハイ", n:"them の th が消えて「ェム」。"},
+    {s:"This is (for) you.", h:"ディスィズ ファユー", n:"for が「ファ」に。"}
+  ],
+  extra:`<h3><span class="mini">発展</span>can と can't の聞き分け</h3>
+  <p>can は弱形「クン」で短く、動詞のほうが強く読まれます。can't は弱形がなく「キャン(ト)」と強く読まれ、t は脱落しがちです。末尾の t ではなく、<b>母音の強さと長さ</b>で聞き分けるのがコツです。</p>`,
+  ex2:[
+    {s:"I (can) *do* it.", h:"アイクン ドゥーイッ", n:"can は弱く、do が強い。"},
+    {s:"I *can'[t]* do it.", h:"アイキャン ドゥーイッ", n:"can't 自体が強く長い。"}
+  ],
+  quiz:["I need to go.","What do you want for lunch?","Bread and butter."] },
+
+{ id:"assim", no:"04", title:"同化", tag:"混ざる", lead:"隣り合う2つの音が影響し合って、別の音に変わる現象です。",
+  body:`<h3>基本形：語末の t / d / s / z ＋ you・your</h3>
+  <p class="rule">t＋y → チュ、d＋y → ジュ、s＋y → シュ、z＋y → ジュ</p>
+  <p>Did you を「ディド・ユー」と思って待っていると、実際には「ディジュー」が来ます。2つの音が溶け合って、1つの新しい音になるのが同化です。</p>`,
+  ex:[
+    {s:"Nice to mee{t y}ou.", h:"ナイストゥ ミーチュー", n:"t＋y → チュ。"},
+    {s:"Di{d y}ou eat?", h:"ディジュー イート？", n:"d＋y → ジュ。"},
+    {s:"Woul{d y}ou like some?", h:"ウッジュー ライク サム？", n:"d＋y → ジュ。"},
+    {s:"Ble{ss y}ou.", h:"ブレッシュー", n:"s＋y → シュ。"},
+    {s:"a{s y}ou know", h:"アジュー ノウ", n:"z＋y → ジュ。"},
+    {s:"Don'{t y}ou think?", h:"ドンチュー スィンク？", n:"t＋y → チュ。"}
+  ],
+  extra:`<h3><span class="mini">発展</span>次の音に引っぱられる同化</h3>
+  <p>n は、次に p / b / m が来ると唇を閉じた m の音に寄ります。ten people は「テンピーポゥ」の n が m 寄りになり「テムピーポゥ」。日本語の「さんぽ（散歩）」の「ん」が m になるのと同じ仕組みです。</p>`,
+  ex2:[
+    {s:"te{n p}eople", h:"テムピーポゥ", n:"n が m に寄る。"},
+    {s:"i{n b}ed", h:"イムベッド", n:"n が m に寄る。"}
+  ],
+  quiz:["Did you see that?","What did you say?","Can I ask you something?"] },
+
+{ id:"flap", no:"05", title:"フラップ（tの七変化）", tag:"変わる", lead:"アメリカ英語の t は、位置によっていくつもの顔を持ちます。",
+  body:`<h3>基本形：母音にはさまれた t → 軽い「ラ行」</h3>
+  <p class="rule">t（と d）が母音にはさまれ、後ろが弱い音節のとき、舌先で一瞬はじく「ラ行」っぽい音になる。</p>
+  <p>water が「ワラ」、better が「ベラ」と聞こえるのはこれです。単語の中だけでなく、get up → 「ゲラップ」のように単語をまたいでも起きます。</p>
+  <div class="tbl"><table class="wf">
+  <tr><th>t の位置</th><th>変化</th><th>例</th><th>聞こえ方</th></tr>
+  <tr><td>単語の頭・強い音節の頭</td><td>はっきり「トゥ」</td><td class="en">top / attack</td><td>トップ / アタック</td></tr>
+  <tr><td>母音にはさまれる</td><td>ラ行（フラップ）</td><td class="en">water / get up</td><td>ワラ / ゲラップ</td></tr>
+  <tr><td>n の後で母音の前</td><td>消える</td><td class="en">twenty / center</td><td>トゥエニー / セナー</td></tr>
+  <tr><td>n の前・語末</td><td>喉で止める（声門閉鎖）</td><td class="en">button / that</td><td>バッン / ザッ</td></tr>
+  <tr><td>子音の前</td><td>脱落</td><td class="en">hot dog</td><td>ハッドッグ</td></tr>
+  <tr><td>you の前</td><td>同化してチュ</td><td class="en">meet you</td><td>ミーチュー</td></tr>
+  <tr><td>to と組んで短縮</td><td>na</td><td class="en">want to</td><td>ワナ</td></tr>
+  </table></div>`,
+  ex:[
+    {s:"wa{t}er", h:"ワラ", n:"母音にはさまれた t。"},
+    {s:"Ge{t}‿up.", h:"ゲラップ", n:"単語をまたいでもフラップ。"},
+    {s:"a lo{t}‿of", h:"アラロヴ", n:"lot of がつながって「ラロ」。"},
+    {s:"Wha{t}‿are you doing?", h:"ワラユー ドゥーイン？", n:"what are → ワラ。"},
+    {s:"I'll call you la{t}er.", h:"アゥ コーリュー レイラー", n:"later も「レイラー」。"}
+  ],
+  extra:`<h3><span class="mini">発展</span>声門閉鎖音（喉で止める t）</h3>
+  <p>button、mountain、Not now の t は、舌を使わず喉で息を一瞬止めます。「バッン」「マウッン」のように、t があった場所に小さな「間」だけが残ります。</p>
+  <h3><span class="mini">発展</span>d もフラップする</h3>
+  <p>ladder と latter、medal と metal は、アメリカ英語ではほぼ同じ音になります。文脈で判断しているのです。</p>`,
+  ex2:[
+    {s:"bu{tt}on / moun{t}ain", h:"バッン / マウッン", n:"喉で止める。"},
+    {s:"Coul{d} I?", h:"クライ？", n:"d もフラップする。"}
+  ],
+  quiz:["Let it go.","I got it.","What a beautiful day."] },
+
+{ id:"contract", no:"番外", title:"短縮・縮約", tag:"番外編", lead:"変化がくり返された結果、もはや「別の単語」として定着した形です。",
+  body:`<p>going to → gonna は、弱形（to→タ）・脱落（ng の g）・リンキングが重なってできた形です。ここまでの5つのルールの総まとめともいえます。</p>
+  <p class="rule">会話ではこちらが標準。書き言葉で使うのはカジュアルな場面だけ。</p>
+  <div class="tbl"><table class="wf">
+  <tr><th>元の形</th><th>短縮形</th><th>聞こえ方</th></tr>
+  <tr><td class="en">going to</td><td class="en">gonna</td><td>ゴナ / ガナ</td></tr>
+  <tr><td class="en">want to</td><td class="en">wanna</td><td>ワナ</td></tr>
+  <tr><td class="en">got to</td><td class="en">gotta</td><td>ガラ</td></tr>
+  <tr><td class="en">kind of</td><td class="en">kinda</td><td>カインダ</td></tr>
+  <tr><td class="en">let me / give me</td><td class="en">lemme / gimme</td><td>レミ / ギミ</td></tr>
+  <tr><td class="en">don't know</td><td class="en">dunno</td><td>ダノウ</td></tr>
+  <tr><td class="en">should have</td><td class="en">should've</td><td>シュダヴ / シュダ</td></tr>
+  </table></div>`,
+  ex:[
+    {s:"I'm gonna call her.", h:"アイムガナ コーラー", n:"gonna＋h の脱落。"},
+    {s:"I wanna go home.", h:"アイワナ ゴウホウム", n:"want to → wanna。"},
+    {s:"I gotta go.", h:"アイガラ ゴウ", n:"gotta の t もフラップ。"},
+    {s:"Lemme see.", h:"レミスィー", n:"let me → lemme。"},
+    {s:"You should've told me.", h:"ユーシュダヴ トウゥミ", n:"should have → should've。"}
+  ],
+  quiz:["I'm gonna be late.","Do you wanna come?","I kinda like it."] },
+
+{ id:"final", no:"総合", title:"総合テスト", tag:"仕上げ", lead:"複数の変化が同時に起きる文で、仕上げの聞き取りです。",
+  body:`<p>各文には2〜4種類の変化が入っています。答え合わせのあと「どこで何が起きたか」を、ここまでの記号を思い出しながら確認してみてください。</p>`,
+  ex:[],
+  quiz:["What are you gonna do about it?","Did you get a lot of it?","I don't want to talk about it.","Tell him I said hi.","Could you put it on the table?"] }
+];
+
+const KANA = {"Take it easy.": "テイキリーズィー", "Hold on a second.": "ホウルダナ セカン", "Can I have an orange?": "クナイ ハヴァン ノーリンジ", "I don't think so.": "アイドン スィンク ソウ", "Good job.": "グッジャブ", "Give him a call.": "ギヴィマ コーゥ", "I need to go.": "アイニーラ ゴウ", "What do you want for lunch?": "ワラヤ ワン ファ ランチ", "Bread and butter.": "ブレッドン バラー", "Did you see that?": "ディジャ スィー ザッ", "What did you say?": "ワディジャ セイ", "Can I ask you something?": "クナイ アスキュー サムスィン", "Let it go.": "レリゴウ", "I got it.": "アイガリッ", "What a beautiful day.": "ワラ ビューリフォー デイ", "I'm gonna be late.": "アイムガナ ビ レイッ", "Do you wanna come?": "ダヤ ワナ カム", "I kinda like it.": "アイ カインダ ライキッ", "What are you gonna do about it?": "ワラヤ ガナ ドゥー アバウリッ", "Did you get a lot of it?": "ディジャ ゲラ ラーラヴィッ", "I don't want to talk about it.": "アイドン ワナ トーカバウリッ", "Tell him I said hi.": "テリム アイセッ ハイ", "Could you put it on the table?": "クッジャ プリロン ザ テイボゥ"};
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+function mark(s){
+  return esc(s)
+    .replace(/\[([^\]]+)\]/g,'<span class="dl">$1</span>')
+    .replace(/\{([^}]+)\}/g,'<span class="cg">$1</span>')
+    .replace(/\(([^)]+)\)/g,'<span class="wk">$1</span>')
+    .replace(/\*([^*]+)\*/g,'<span class="st">$1</span>')
+    .replace(/‿/g,'<span class="lk">‿</span>');
+}
+const plain = s => s.replace(/[\[\]{}()*]/g,"").replace(/‿/g," ").replace(/\s+/g," ").trim();
+
+let uid=0;
+function exCard(e){
+  const id="ex"+(uid++); const say=plain(e.s).replace(/"/g,"&quot;");
+  return `<div class="ex">
+    <div class="sent">${mark(e.s)}</div>
+    <div class="ctrls">
+      <button class="play" data-say="${say}" data-rate="1">▶ ナチュラル</button>
+      <button data-say="${say}" data-rate="0.6">ゆっくり</button>
+      <button data-say="${say}" data-words="1">単語区切り</button>
+      <button class="reveal" aria-controls="${id}" aria-expanded="false">聞こえ方を見る</button>
+    </div>
+    <div id="${id}" class="detail" hidden>
+      <div class="hear">聞こえ方：<span class="k">${esc(e.h)}</span></div>
+      <div class="note">${esc(e.n)}</div>
+    </div>
+  </div>`;
+}
+const exList = arr => arr && arr.length ? `<div class="ex-list">${arr.map(exCard).join("")}</div>` : "";
+
+function quizBlock(ch){
+  if(!ch.quiz.length) return "";
+  const items = ch.quiz.map((q,i)=>{
+    const id=`q-${ch.id}-${i}`; const say=q.replace(/"/g,"&quot;");
+    return `<div class="qi" data-ans="${say}">
+      <div class="row">
+        <button class="play" data-say="${say}" data-rate="1">▶ 第${i+1}問</button>
+        <button data-say="${say}" data-rate="0.6">ゆっくり</button>
+      </div>
+      <div class="row">
+        <label class="wk" for="${id}" style="position:absolute;left:-9999px">第${i+1}問の答え</label>
+        <input id="${id}" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="聞こえた英文を入力">
+        <button class="check">答え合わせ</button>
+      </div>
+      <div class="res" aria-live="polite"></div>
+    </div>`;}).join("");
+  return `<div class="quiz" data-ch="${ch.id}">
+    <div class="qh"><h3>聞き取りテスト（ディクテーション）</h3><span class="score">0 / ${ch.quiz.length} 正解</span></div>
+    ${items}</div>`;
+}
+
+document.getElementById("toc").innerHTML = CH.map(c=>
+  `<li><a href="#${c.id}"><span class="no">${c.no}</span><span>${c.title}</span></a></li>`).join("");
+
+document.getElementById("chapters").innerHTML = CH.map(c=>`
+<section class="ch" id="${c.id}">
+  <div class="ch-head" data-no="${/^\d/.test(c.no)?c.no:''}"><div class="ch-no">${/^\d/.test(c.no)?"CHAPTER "+c.no:c.no}</div><h2>${c.title}</h2><p class="lead">${c.lead}</p></div>
+  <div class="prose">${c.body}</div>
+  ${exList(c.ex)}
+  ${c.extra?`<div class="prose">${c.extra}</div>`:""}
+  ${exList(c.ex2)}
+  ${c.column?`<div class="column">${c.column}${exList(c.ex3)}</div>`:""}
+  ${quizBlock(c)}
+</section>`).join("");
+
+/* 音声（仮：AI音声ファイル。本番は収録音声に差し替え） */
+const AUDIO = {"What are you gonna do?": "a00", "Want some coffee?": "a01", "Would you like to have some coffee?": "a02", "Check it out.": "a03", "Pick it up.": "a04", "an apple": "a05", "Come on in.": "a06", "Not at all.": "a07", "Go on.": "a08", "I am here.": "a09", "good boy": "a10", "hot dog": "a11", "I don't know.": "a12", "next day": "a13", "last night": "a14", "Tell him.": "a15", "Ask her.": "a16", "twenty": "a17", "I want it.": "a18", "milk / feel / people": "a19", "rock and roll": "a20", "a cup of tea": "a21", "Tell them I said hi.": "a22", "This is for you.": "a23", "I can do it.": "a24", "I can't do it.": "a25", "Nice to meet you.": "a26", "Did you eat?": "a27", "Would you like some?": "a28", "Bless you.": "a29", "as you know": "a30", "Don't you think?": "a31", "ten people": "a32", "in bed": "a33", "water": "a34", "Get up.": "a35", "a lot of": "a36", "What are you doing?": "a37", "I'll call you later.": "a38", "button / mountain": "a39", "Could I?": "a40", "I'm gonna call her.": "a41", "I wanna go home.": "a42", "I gotta go.": "a43", "Lemme see.": "a44", "You should've told me.": "a45", "Take it easy.": "a46", "Hold on a second.": "a47", "Can I have an orange?": "a48", "I don't think so.": "a49", "Good job.": "a50", "Give him a call.": "a51", "I need to go.": "a52", "What do you want for lunch?": "a53", "Bread and butter.": "a54", "Did you see that?": "a55", "What did you say?": "a56", "Can I ask you something?": "a57", "Let it go.": "a58", "I got it.": "a59", "What a beautiful day.": "a60", "I'm gonna be late.": "a61", "Do you wanna come?": "a62", "I kinda like it.": "a63", "What are you gonna do about it?": "a64", "Did you get a lot of it?": "a65", "I don't want to talk about it.": "a66", "Tell him I said hi.": "a67", "Could you put it on the table?": "a68", "light / look / alive": "a69"};
+let cur=null;
+function play(text, kind){
+  const id=AUDIO[text]; if(!id) return false;
+  if(cur){ cur.pause(); cur.currentTime=0; }
+  cur=new Audio("audio/"+id+kind+".mp3");
+  cur.play().catch(()=>{});
+  return true;
+}
+const norm = s => s.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z' ]/g," ").replace(/\s+/g," ").trim();
+
+document.addEventListener("click", ev=>{
+  const b = ev.target.closest("button"); if(!b) return;
+  if(b.dataset.say){
+    const kind = b.dataset.words ? "w" : (parseFloat(b.dataset.rate||"1")<1 ? "s" : "n");
+    if(!play(b.dataset.say, kind)){ b.textContent="音声準備中"; }
+    return;
+  }
+  if(b.classList.contains("reveal")){
+    const d=document.getElementById(b.getAttribute("aria-controls"));
+    d.hidden=!d.hidden; b.setAttribute("aria-expanded",String(!d.hidden));
+    b.textContent = d.hidden ? "聞こえ方を見る" : "閉じる"; return;
+  }
+  if(b.classList.contains("check")){
+    const qi=b.closest(".qi"), inp=qi.querySelector("input"), res=qi.querySelector(".res");
+    const ok = norm(inp.value)===norm(qi.dataset.ans);
+    qi.dataset.done = ok ? "ok" : "ng";
+    res.className="res "+(ok?"ok":"ng");
+    res.innerHTML = `<b>${ok?"正解！":"惜しい！"}</b> 正解：<span class="ans">${esc(qi.dataset.ans)}</span><span class="kana">聞こえ方：${esc(KANA[qi.dataset.ans]||"")}</span>`;
+    const quiz=qi.closest(".quiz"); const all=quiz.querySelectorAll(".qi");
+    const n=[...all].filter(x=>x.dataset.done==="ok").length;
+    quiz.querySelector(".score").textContent=`${n} / ${all.length} 正解`;
+  }
+});
+document.addEventListener("keydown", ev=>{
+  if(ev.key==="Enter" && ev.target.matches(".qi input")){ ev.target.closest(".qi").querySelector(".check").click(); }
+});
+</script>
+
+</body>
+</html>
